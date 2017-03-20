@@ -1,0 +1,1846 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     55205,       1837]
+NotebookOptionsPosition[     50351,       1712]
+NotebookOutlinePosition[     50714,       1728]
+CellTagsIndexPosition[     50671,       1725]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Sampling methods", "Title",
+ CellChangeTimes->{{3.6979710343487663`*^9, 3.697971037917774*^9}, {
+  3.6979939527219267`*^9, 3.697993960711865*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Importance sampling", "Section",
+ CellChangeTimes->{{3.697971048047491*^9, 3.697971051852512*^9}, {
+  3.697993965224593*^9, 3.697993972484655*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"I", "=", 
+   RowBox[{"\[Integral]", 
+    RowBox[{
+     RowBox[{"g", "(", "x", ")"}], 
+     RowBox[{"f", "(", "x", ")"}], 
+     RowBox[{"\[DifferentialD]", "x"}]}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.697994462028674*^9, 3.697994469925516*^9}}],
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["X", "1"], ",", "\[Ellipsis]", ",", 
+    SubscriptBox["X", "N"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " i.i.d from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "X", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"]
+}], "TextNoIndent",
+ CellChangeTimes->{{3.6979944038119717`*^9, 3.697994447839658*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   SubscriptBox["I", "N"], "=", 
+   RowBox[{
+    FractionBox["1", "N"], 
+    RowBox[{
+     OverscriptBox[
+      UnderscriptBox["\[Sum]", 
+       RowBox[{"i", "=", "1"}]], "N"], 
+     RowBox[{"g", "(", 
+      SubscriptBox["X", "i"], ")"}]}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.697994394332967*^9, 3.697994398777342*^9}, {
+  3.697994433797221*^9, 3.697994444301862*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"E", "(", 
+    SubscriptBox["I", "N"], ")"}], "=", "I"}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.697994479266415*^9, 3.697994483631344*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"Var", "(", 
+    SubscriptBox["I", "N"], ")"}], "=", 
+   RowBox[{
+    FractionBox["1", "N"], 
+    RowBox[{"Var", "(", 
+     RowBox[{"g", "(", "X", ")"}], ")"}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.697994486426783*^9, 3.697994504344963*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Rejection sampling", "Section",
+ CellChangeTimes->{{3.697971048047491*^9, 3.697971051852512*^9}, {
+  3.697993965224593*^9, 3.697993972484655*^9}, {3.6979945231265593`*^9, 
+  3.697994525323015*^9}}],
+
+Cell["Consider", "TextNoIndent",
+ CellChangeTimes->{{3.697994632083736*^9, 3.697994636252685*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"f", "(", "x", ")"}], "=", 
+   RowBox[{
+    RowBox[{"l", "(", "x", ")"}], 
+    RowBox[{"h", "(", "x", ")"}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.697994638524857*^9, 3.6979946439036913`*^9}}],
+
+Cell[TextData[{
+ "where ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"h", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " can be easily sampled and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"l", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is bounded by ",
+ Cell[BoxData[
+  FormBox["M", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", i.e. ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"l", "(", "x", ")"}], "\[LessEqual]", "M"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " for all ",
+ Cell[BoxData[
+  FormBox["x", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". The joint density is"
+}], "TextNoIndent",
+ CellChangeTimes->{{3.697994646178094*^9, 3.697994699621353*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"f", "(", 
+    RowBox[{"x", ",", "y"}], ")"}], "=", 
+   RowBox[{"M", " ", 
+    StyleBox["1",
+     FontWeight->"Bold"], 
+    RowBox[{"(", 
+     RowBox[{"y", "\[LessEqual]", 
+      FractionBox[
+       RowBox[{"l", "(", "x", ")"}], "M"]}], ")"}], 
+    RowBox[{"h", "(", "x", ")"}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.697994701417794*^9, 3.697994742164172*^9}}],
+
+Cell["and", "TextNoIndent",
+ CellChangeTimes->{{3.6979947999346857`*^9, 3.6979948001814423`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"f", "(", "x", ")"}], "=", 
+   RowBox[{
+    RowBox[{"\[Integral]", 
+     RowBox[{
+      RowBox[{"f", "(", 
+       RowBox[{"x", ",", "y"}], ")"}], 
+      RowBox[{"\[DifferentialD]", "y"}]}]}], "=", 
+    RowBox[{
+     RowBox[{"\[Integral]", 
+      RowBox[{"M", " ", 
+       StyleBox["1",
+        FontWeight->"Bold"], 
+       RowBox[{"(", 
+        RowBox[{"y", "\[LessEqual]", 
+         FractionBox[
+          RowBox[{"l", "(", "x", ")"}], "M"]}], ")"}], 
+       RowBox[{"h", "(", "x", ")"}], 
+       RowBox[{"\[DifferentialD]", "y"}]}]}], "=", 
+     RowBox[{
+      RowBox[{"l", "(", "x", ")"}], 
+      RowBox[{"h", "(", "x", ")"}]}]}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.697994801722044*^9, 3.697994835877116*^9}}],
+
+Cell[TextData[{
+ "So we can sample ",
+ Cell[BoxData[
+  FormBox["x", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"h", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox["y", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"U", "(", 
+    RowBox[{"0", ",", "1"}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " independently and if ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"y", "\[LessEqual]", 
+    FractionBox[
+     RowBox[{"l", "(", "x", ")"}], "M"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " then we accept ",
+ Cell[BoxData[
+  FormBox["X", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " as coming from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"f", "(", "x", ")"}], "=", 
+    RowBox[{
+     RowBox[{"l", "(", "x", ")"}], 
+     RowBox[{"h", "(", "x", ")"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". If it does not, we try again. It is worth calculating the acceptance \
+probability"
+}], "TextNoIndent",
+ CellChangeTimes->{{3.697994916589326*^9, 3.697995007014632*^9}, {
+  3.6979950410850286`*^9, 3.6979950662010508`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"P", "(", 
+    RowBox[{"y", "\[LessEqual]", 
+     FractionBox[
+      RowBox[{"l", "(", "x", ")"}], "M"]}], ")"}], "=", 
+   RowBox[{
+    RowBox[{"\[Integral]", 
+     RowBox[{
+      RowBox[{"P", "(", 
+       RowBox[{
+        RowBox[{"y", "\[LessEqual]", 
+         FractionBox[
+          RowBox[{"l", "(", "x", ")"}], "M"]}], "|", "x"}], ")"}], 
+      RowBox[{"h", "(", "x", ")"}], 
+      RowBox[{"\[DifferentialD]", "x"}]}]}], "=", 
+    RowBox[{
+     RowBox[{"\[Integral]", 
+      RowBox[{
+       FractionBox[
+        RowBox[{"l", "(", "x", ")"}], "M"], 
+       RowBox[{"h", "(", "x", ")"}], 
+       RowBox[{"\[DifferentialD]", "x"}]}]}], "=", 
+     RowBox[{
+      RowBox[{
+       FractionBox["1", "M"], 
+       RowBox[{"\[Integral]", 
+        RowBox[{
+         RowBox[{"f", "(", "x", ")"}], 
+         RowBox[{"\[DifferentialD]", "x"}]}]}]}], "=", 
+      FractionBox["1", "M"]}]}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.69799522774907*^9, 3.697995266732359*^9}, {
+  3.6979953618177547`*^9, 3.697995448132176*^9}, {3.697995486575926*^9, 
+  3.6979954887401667`*^9}, {3.697995714052198*^9, 3.69799572991334*^9}, {
+  3.6979957735296307`*^9, 3.697995781945533*^9}, {3.6979958290076237`*^9, 
+  3.6979958715120163`*^9}, {3.697995954578506*^9, 3.697995954634941*^9}, {
+  3.697996306050556*^9, 3.69799636295653*^9}, {3.697996413954207*^9, 
+  3.697996427970077*^9}}],
+
+Cell[TextData[{
+ "Even if ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is unnormalized, we can still compute the acceptance probability as"
+}], "TextNoIndent",
+ CellChangeTimes->{{3.697996382173747*^9, 3.697996403543605*^9}, {
+  3.69799645043125*^9, 3.697996450853434*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"P", "(", 
+    RowBox[{"y", "\[LessEqual]", 
+     FractionBox[
+      RowBox[{"l", "(", "x", ")"}], "M"]}], ")"}], "=", 
+   FractionBox["N", "M"]}], TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.69799644217828*^9, 3.6979964456127033`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Adaptive rejection sampling", "Section",
+ CellChangeTimes->{{3.697971048047491*^9, 3.697971051852512*^9}, {
+  3.697993965224593*^9, 3.697993972484655*^9}, {3.6979945231265593`*^9, 
+  3.697994525323015*^9}, {3.69799658217515*^9, 3.697996589259872*^9}}],
+
+Cell[TextData[{
+ "To sample ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", we can use lines that are upper bound of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". In other words, we need to find ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"h", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " that is the envelope function of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " such that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"h", "(", "x", ")"}], "\[GreaterEqual]", 
+    RowBox[{"f", "(", "x", ")"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " everywhere and the gap between them is as small as possible. So we can \
+make ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"h", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " piecewise linear. For such ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"h", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", we can apply rejection sampling as"
+}], "TextNoIndent",
+ CellChangeTimes->{{3.6980129588667517`*^9, 3.6980131575266123`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"f", "(", "x", ")"}], "=", 
+   RowBox[{
+    RowBox[{"l", "(", "x", ")"}], 
+    RowBox[{"h", "(", "x", ")"}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.698013159316986*^9, 3.698013164020105*^9}}],
+
+Cell[TextData[{
+ "How we construct the piecewise ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"h", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is by adaptive rejection sampling: Suppose ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is log concave:"
+}], "TextNoIndent",
+ CellChangeTimes->{{3.698013186601125*^9, 3.698013265929043*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   FractionBox[
+    RowBox[{
+     RowBox[{
+      SuperscriptBox["\[DifferentialD]", "2"], "log"}], " ", 
+     RowBox[{"f", "(", "x", ")"}]}], 
+    RowBox[{"\[DifferentialD]", 
+     SuperscriptBox["x", "2"]}]], "\[GreaterEqual]", "0"}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.698013266925261*^9, 3.69801327634997*^9}}],
+
+Cell[TextData[{
+ "We will be able to find an upperbound for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"log", " ", 
+    RowBox[{"f", "(", "x", ")"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " using lines. Suppose at some stage we have 3 lines as upper bound for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", we take a proposal ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["x", "*"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"h", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". If we accept ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["x", "*"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", we resample with the same envelope. If we reject ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["x", "*"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", we adjust the envelope by evaluating ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      FractionBox["\[DifferentialD]", 
+       RowBox[{"\[DifferentialD]", "x"}]], "log"}], " ", 
+     RowBox[{"f", "(", "x", ")"}]}], 
+    SubscriptBox["|", 
+     SuperscriptBox["x", "*"]]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", which will give us the tangent at ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["x", "*"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", we can form a new piecewise linear upper bound for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"log", "(", 
+    RowBox[{"f", "(", "x", ")"}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " by connecting up previous lines with the tangent."
+}], "TextNoIndent",
+ CellChangeTimes->{{3.698013316299405*^9, 3.6980133434070463`*^9}, {
+  3.6980135067641573`*^9, 3.698013538950993*^9}, {3.6980140443309526`*^9, 
+  3.698014078969843*^9}, {3.698014138084033*^9, 3.6980142899209833`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Ratio of uniforms", "Section",
+ CellChangeTimes->{{3.697971048047491*^9, 3.697971051852512*^9}, {
+  3.697993965224593*^9, 3.697993972484655*^9}, {3.6979945231265593`*^9, 
+  3.697994525323015*^9}, {3.69799658217515*^9, 3.697996605491722*^9}}],
+
+Cell[TextData[{
+ "To sample ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", let ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"a", "=", 
+    RowBox[{
+     UnderscriptBox["max", "x"], 
+     SqrtBox[
+      RowBox[{"f", "(", "x", ")"}]]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"b", "=", 
+    RowBox[{
+     SubscriptBox["max", "x"], "x", 
+     SqrtBox[
+      RowBox[{"f", "(", "x", ")"}]]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", then take ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     SubscriptBox["u", "1"], "~", 
+     RowBox[{"U", "(", 
+      RowBox[{"0", ",", "a"}], ")"}]}], ",", " ", 
+    RowBox[{
+     SubscriptBox["u", "2"], "~", 
+     RowBox[{"U", "(", 
+      RowBox[{
+       RowBox[{
+        SubscriptBox["min", "x"], "x", 
+        SqrtBox[
+         RowBox[{"f", "(", "x", ")"}]]}], ",", "b"}], ")"}]}]}], 
+   TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". We accept ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"X", "=", 
+    FractionBox[
+     SubscriptBox["U", "2"], 
+     SubscriptBox["U", "1"]]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " as coming from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "X", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " if ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["U", "1"], "\[LessEqual]", 
+    SqrtBox[
+     RowBox[{"f", "(", 
+      RowBox[{
+       SubscriptBox["U", "2"], "/", 
+       SubscriptBox["U", "1"]}], ")"}]]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". To show that this algorithm is correct, we examine the joint density"
+}], "TextNoIndent",
+ CellChangeTimes->{{3.698002341725493*^9, 3.698002465282221*^9}, {
+  3.698002524656769*^9, 3.6980025512063837`*^9}, {3.69800345854417*^9, 
+  3.698003464116994*^9}, {3.698003757897591*^9, 3.698003766448509*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"f", "(", 
+    RowBox[{"x", ",", "y"}], ")"}], "\[Proportional]", 
+   RowBox[{"2", "y", " ", 
+    StyleBox["1",
+     FontWeight->"Bold"], 
+    RowBox[{"(", 
+     RowBox[{"y", "<", 
+      SqrtBox[
+       RowBox[{"f", "(", "x", ")"}]]}], ")"}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.698002553562147*^9, 3.698002569002116*^9}, 
+   3.6980026744229183`*^9}],
+
+Cell["So", "TextNoIndent",
+ CellChangeTimes->{{3.6980025811962223`*^9, 3.6980025813205767`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"f", "(", "x", ")"}], "=", 
+   RowBox[{"\[Integral]", 
+    RowBox[{
+     RowBox[{"f", "(", 
+      RowBox[{"x", ",", "y"}], ")"}], 
+     RowBox[{"\[DifferentialD]", "y"}]}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.698002583900353*^9, 3.698002615638974*^9}, 
+   3.698002676618422*^9}],
+
+Cell["Now we use the transformation", "TextNoIndent",
+ CellChangeTimes->{{3.698002738784985*^9, 3.698002743963462*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"y", "=", 
+    SubscriptBox["U", "1"]}], ",", 
+   RowBox[{"x", "=", 
+    RowBox[{
+     SubscriptBox["U", "2"], "/", 
+     SubscriptBox["U", "1"]}]}]}], TraditionalForm]], "DisplayFormulaNumbered",\
+
+ CellChangeTimes->{{3.698002747042081*^9, 3.698002764717133*^9}}],
+
+Cell["Then", "TextNoIndent",
+ CellChangeTimes->{{3.698002773163939*^9, 3.698002773553974*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{"f", "(", 
+     RowBox[{
+      SubscriptBox["U", "1"], ",", 
+      SubscriptBox["U", "2"]}], ")"}], "\[Proportional]", 
+    RowBox[{"2", 
+     SubscriptBox["U", "1"], 
+     StyleBox["1",
+      FontWeight->"Bold"], 
+     RowBox[{"(", 
+      RowBox[{
+       SubscriptBox["U", "1"], "\[LessEqual]", 
+       SqrtBox[
+        RowBox[{"f", "(", 
+         RowBox[{
+          SubscriptBox["U", "2"], "/", 
+          SubscriptBox["U", "1"]}], ")"}]]}], ")"}]}]}], "|", "J", "|"}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.698002778462865*^9, 3.6980028363563147`*^9}}],
+
+Cell["where", "TextNoIndent",
+ CellChangeTimes->{{3.698002830588797*^9, 3.698002831043068*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"|", "J", "|"}], "=", 
+   RowBox[{
+    RowBox[{"|", 
+     RowBox[{"(", GridBox[{
+        {
+         FractionBox[
+          RowBox[{"\[PartialD]", "x"}], 
+          RowBox[{"\[PartialD]", 
+           SubscriptBox["u", "1"]}]], 
+         FractionBox[
+          RowBox[{"\[PartialD]", "x"}], 
+          RowBox[{"\[PartialD]", 
+           SubscriptBox["u", "2"]}]]},
+        {
+         FractionBox[
+          RowBox[{"\[PartialD]", "y"}], 
+          RowBox[{"\[PartialD]", 
+           SubscriptBox["u", "1"]}]], 
+         FractionBox[
+          RowBox[{"\[PartialD]", "y"}], 
+          RowBox[{"\[PartialD]", 
+           SubscriptBox["u", "2"]}]]}
+       }], ")"}], "|"}], "=", 
+    RowBox[{
+     RowBox[{"|", 
+      RowBox[{"(", GridBox[{
+         {
+          RowBox[{
+           RowBox[{"-", 
+            SubscriptBox["U", "2"]}], "/", 
+           SuperscriptBox[
+            SubscriptBox["U", "1"], "2"]}], 
+          RowBox[{"1", "/", 
+           SubscriptBox["U", "1"]}]},
+         {"1", "0"}
+        }], ")"}], "|"}], "=", 
+     RowBox[{"1", "/", 
+      SubscriptBox["U", "1"]}]}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.6980028380992928`*^9, 3.698002933626107*^9}}],
+
+Cell["So if we can sample uniformly from the interval", "TextNoIndent",
+ CellChangeTimes->{{3.6980029710000362`*^9, 3.698002982321227*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"S", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       SubscriptBox["U", "1"], ",", 
+       SubscriptBox["U", "2"]}], ")"}], "|", 
+     RowBox[{
+      SubscriptBox["U", "1"], "\[LessEqual]", 
+      SqrtBox[
+       RowBox[{"f", "(", 
+        RowBox[{
+         SubscriptBox["U", "2"], "/", 
+         SubscriptBox["U", "1"]}], ")"}]]}]}], "}"}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.698002985198373*^9, 3.698003006460842*^9}}],
+
+Cell[TextData[{
+ "then we can take ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"X", "=", 
+    RowBox[{
+     SubscriptBox["U", "2"], "/", 
+     SubscriptBox["U", "1"]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " as coming from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". Obviously, the region is bounded by a rectangle. To find the suitable \
+rectangle, we notice that"
+}], "TextNoIndent",
+ CellChangeTimes->{{3.6980030108844557`*^9, 3.698003052707864*^9}, {
+  3.698003150196815*^9, 3.69800318940025*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["u", "1"], "\[LessEqual]", 
+    RowBox[{
+     SubscriptBox["max", "x"], 
+     SqrtBox[
+      RowBox[{"f", "(", "x", ")"}]]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", so we sample ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["u", "1"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Uniform", "(", 
+    RowBox[{"0", ",", 
+     RowBox[{
+      SubscriptBox["max", "x"], 
+      SqrtBox[
+       RowBox[{"f", "(", "x", ")"}]]}]}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "Item",
+ CellChangeTimes->{{3.698001946893055*^9, 3.698001955013166*^9}, {
+  3.698003203021943*^9, 3.698003214559558*^9}, {3.698003283740876*^9, 
+  3.6980033146823883`*^9}}],
+
+Cell[TextData[{
+ "If ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", "\[GreaterEqual]", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", we have ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["U", "2"], "=", 
+    RowBox[{"Y", " ", "X"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Y", "=", 
+    RowBox[{
+     SubscriptBox["U", "1"], "\[LessEqual]", 
+     SqrtBox[
+      RowBox[{"f", "(", "x", ")"}]]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", so ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["U", "2"], "\[LessEqual]", 
+    RowBox[{
+     SubscriptBox["max", "x"], "x", 
+     SqrtBox[
+      RowBox[{"f", "(", "x", ")"}]]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"]
+}], "Item",
+ CellChangeTimes->{{3.698001959663313*^9, 3.698001997074172*^9}, {
+  3.698003318981284*^9, 3.698003368266138*^9}}],
+
+Cell[TextData[{
+ "If ",
+ Cell[BoxData[
+  FormBox["x", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " can be negative, then  ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["U", "2"], "\[GreaterEqual]", 
+    RowBox[{
+     SubscriptBox["min", "x"], "x", 
+     SqrtBox[
+      RowBox[{"f", "(", "x", ")"}]]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"]
+}], "Item",
+ CellChangeTimes->{{3.6980020025168133`*^9, 3.698002026809456*^9}, {
+  3.698003380967834*^9, 3.698003420941937*^9}}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Overall, ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["U", "2"], "~", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["min", "x"], "x", 
+       SqrtBox[
+        RowBox[{"f", "(", "x", ")"}]]}], ",", 
+      RowBox[{
+       SubscriptBox["max", "x"], "x", 
+       SqrtBox[
+        RowBox[{"f", "(", "x", ")"}]]}]}], ")"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". So we can implement a ratio of uniforms if ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " has an upper bound and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"|", "x", "|", 
+    SqrtBox[
+     RowBox[{"f", "(", "x", ")"}]]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " has an upper limit. Clearly, the probability of acceptance is given by ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["S", "R"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "TextNoIndent",
+ CellChangeTimes->{{3.69800351856658*^9, 3.6980036597039213`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Normalized Importance Sampling", "Section",
+ CellChangeTimes->{{3.697971048047491*^9, 3.697971051852512*^9}, {
+  3.697993965224593*^9, 3.697993972484655*^9}, {3.6979945231265593`*^9, 
+  3.697994525323015*^9}, {3.69799658217515*^9, 3.697996605491722*^9}, {
+  3.69866047382548*^9, 3.698660483934863*^9}}],
+
+Cell["Suppose we want to estimate", "TextNoIndent",
+ CellChangeTimes->{{3.6986652529214478`*^9, 3.698665274807822*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox["E", "f"], 
+    RowBox[{"g", "(", "x", ")"}]}], "=", 
+   RowBox[{"\[Integral]", 
+    RowBox[{
+     RowBox[{"g", "(", "x", ")"}], 
+     RowBox[{"f", "(", "x", ")"}], 
+     RowBox[{"\[DifferentialD]", "x"}]}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.6986652761259317`*^9, 3.698665283360894*^9}}],
+
+Cell[TextData[{
+ "but we cannot sample ",
+ Cell[BoxData[
+  FormBox["f", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " directly and we only know ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["f", "*"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " that is proportional to ",
+ Cell[BoxData[
+  FormBox["f", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " up to normalization, then in order to do importance sampling, we could use \
+",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"h", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " which is easy to sample:"
+}], "TextNoIndent",
+ CellChangeTimes->{{3.698665318052894*^9, 3.698665429925935*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox["E", "f"], 
+    RowBox[{"g", "(", "x", ")"}]}], "=", 
+   RowBox[{
+    RowBox[{"\[Integral]", 
+     RowBox[{
+      RowBox[{"g", "(", "x", ")"}], 
+      RowBox[{"f", "(", "x", ")"}], 
+      RowBox[{"\[DifferentialD]", "x"}]}]}], "=", 
+    RowBox[{
+     RowBox[{"\[Integral]", 
+      RowBox[{
+       RowBox[{"g", "(", "x", ")"}], 
+       FractionBox[
+        RowBox[{"f", "(", "x", ")"}], 
+        RowBox[{"h", "(", "x", ")"}]], 
+       RowBox[{"h", "(", "x", ")"}], 
+       RowBox[{"\[DifferentialD]", "x"}]}]}], "=", 
+     FractionBox[
+      RowBox[{"\[Integral]", 
+       RowBox[{
+        RowBox[{"g", "(", "x", ")"}], 
+        FractionBox[
+         RowBox[{
+          SuperscriptBox["f", "*"], "(", "x", ")"}], 
+         RowBox[{"h", "(", "x", ")"}]], 
+        RowBox[{"h", "(", "x", ")"}], 
+        RowBox[{"\[DifferentialD]", "x"}]}]}], 
+      RowBox[{"\[Integral]", 
+       RowBox[{
+        FractionBox[
+         RowBox[{
+          SuperscriptBox["f", "*"], "(", "x", ")"}], 
+         RowBox[{"h", "(", "x", ")"}]], 
+        RowBox[{"h", "(", "x", ")"}], 
+        RowBox[{"\[DifferentialD]", "x"}]}]}]]}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.698665435225148*^9, 3.698665494448392*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   SubscriptBox["I", "N"], "=", 
+   FractionBox[
+    RowBox[{
+     FractionBox["1", "N"], 
+     RowBox[{
+      UnderoverscriptBox["\[Sum]", 
+       RowBox[{"i", "=", "1"}], "N"], 
+      FractionBox[
+       RowBox[{
+        RowBox[{"g", "(", 
+         SubscriptBox["x", "i"], ")"}], 
+        RowBox[{
+         SuperscriptBox["f", "*"], "(", 
+         SubscriptBox["x", "i"], ")"}]}], 
+       RowBox[{"h", "(", 
+        SubscriptBox["x", "i"], ")"}]]}]}], 
+    RowBox[{
+     FractionBox["1", "N"], 
+     RowBox[{
+      UnderoverscriptBox["\[Sum]", 
+       RowBox[{"i", "=", "1"}], "N"], 
+      FractionBox[
+       RowBox[{
+        SuperscriptBox["f", "*"], "(", 
+        SubscriptBox["x", "i"], ")"}], 
+       RowBox[{"h", "(", 
+        SubscriptBox["x", "i"], ")"}]]}]}]]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.698665518157159*^9, 3.698665584399415*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Markov Chain Monte Carlo Sampling", "Section",
+ CellChangeTimes->{{3.697971048047491*^9, 3.697971051852512*^9}, {
+  3.697993965224593*^9, 3.697993972484655*^9}, {3.6979945231265593`*^9, 
+  3.697994525323015*^9}, {3.69799658217515*^9, 3.697996605491722*^9}, {
+  3.697997047043106*^9, 3.6979970592682056`*^9}}],
+
+Cell["Stationary condition:", "TextNoIndent",
+ CellChangeTimes->{{3.697997180335936*^9, 3.697997189896913*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"\[Pi]", "(", "y", ")"}], "=", 
+   RowBox[{"\[Integral]", 
+    RowBox[{
+     RowBox[{"p", "(", 
+      RowBox[{"y", "|", "x"}], ")"}], 
+     RowBox[{"\[Pi]", "(", "x", ")"}], 
+     RowBox[{"\[DifferentialD]", "x"}]}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.697997140111087*^9, 3.697997171373239*^9}}],
+
+Cell[TextData[{
+ "where ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Pi]", "(", "x", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is the target density. Our goal is to find ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"p", "(", 
+    RowBox[{
+     SubscriptBox["x", 
+      RowBox[{"n", "+", "1"}]], "|", 
+     SubscriptBox["x", "n"]}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "TextNoIndent",
+ CellChangeTimes->{{3.6979971987821083`*^9, 3.697997230495929*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Conditional probability", "Subsection",
+ CellChangeTimes->{{3.6979973066045713`*^9, 3.6979973124134293`*^9}}],
+
+Cell[TextData[{
+ "We introduce a conditional density ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Pi]", "(", 
+    RowBox[{"u", "|", "x"}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " so that we have a joint pdf"
+}], "TextNoIndent",
+ CellChangeTimes->{{3.697997328220117*^9, 3.6979973932288733`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"\[Pi]", "(", 
+    RowBox[{"u", ",", "x"}], ")"}], "=", 
+   RowBox[{
+    RowBox[{"\[Pi]", "(", 
+     RowBox[{"u", "|", "x"}], ")"}], 
+    RowBox[{"\[Pi]", "(", "x", ")"}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.697997395703473*^9, 3.6979974068143177`*^9}}],
+
+Cell["Then", "TextNoIndent",
+ CellChangeTimes->{{3.697997411936982*^9, 3.697997412509063*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"p", "(", 
+    RowBox[{
+     SubscriptBox["x", 
+      RowBox[{"n", "+", "1"}]], "|", 
+     SubscriptBox["x", "n"]}], ")"}], "=", 
+   RowBox[{"\[Integral]", 
+    RowBox[{
+     RowBox[{"\[Pi]", "(", 
+      RowBox[{
+       SubscriptBox["x", 
+        RowBox[{"n", "+", "1"}]], "|", "u"}], ")"}], 
+     RowBox[{"\[Pi]", "(", 
+      RowBox[{"u", "|", 
+       SubscriptBox["x", "n"]}], ")"}], 
+     RowBox[{"\[DifferentialD]", "u"}]}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.697997414345953*^9, 3.697997449639346*^9}}],
+
+Cell[TextData[{
+ "To sample from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"p", "(", 
+    RowBox[{
+     SubscriptBox["x", 
+      RowBox[{"n", "+", "1"}]], "|", 
+     SubscriptBox["x", "n"]}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", we sample ",
+ Cell[BoxData[
+  FormBox["u", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Pi]", "(", 
+    RowBox[{"u", "|", 
+     SubscriptBox["x", "n"]}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and then sample ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", 
+    RowBox[{"n", "+", "1"}]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Pi]", "(", 
+    RowBox[{
+     SubscriptBox["x", 
+      RowBox[{"n", "+", "1"}]], "|", "u"}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". The remaining question is how to construct ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Pi]", "(", 
+    RowBox[{"u", ",", "x"}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". We can use similar idea as in rejection sampling:"
+}], "TextNoIndent",
+ CellChangeTimes->{{3.697998559300952*^9, 3.697998573243181*^9}, {
+  3.697998700204914*^9, 3.697998763168274*^9}, {3.697998807647929*^9, 
+  3.697998882218738*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"\[Pi]", "(", 
+    RowBox[{"u", ",", "x"}], ")"}], "=", 
+   RowBox[{
+    StyleBox["1",
+     FontWeight->"Bold"], 
+    RowBox[{"(", 
+     RowBox[{"u", "\[LessEqual]", 
+      RowBox[{"\[Pi]", "(", "x", ")"}]}], ")"}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.697998887221362*^9, 3.697998903234357*^9}}],
+
+Cell[TextData[{
+ "Then sampling ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Pi]", "(", 
+    RowBox[{"u", "|", 
+     SubscriptBox["x", "n"]}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " can be done by sampling ",
+ Cell[BoxData[
+  FormBox["u", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Uniform", "(", 
+    RowBox[{"0", ",", 
+     RowBox[{"\[Pi]", "(", 
+      SubscriptBox["x", "n"], ")"}]}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", i.e. sampling ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["V", "n"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Uniform", "(", 
+    RowBox[{"0", ",", "1"}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and set ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"u", "=", 
+    RowBox[{
+     RowBox[{"\[Pi]", "(", 
+      SubscriptBox["x", "n"], ")"}], 
+     SubscriptBox["V", "n"]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "; On the other hand, we can sample ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", 
+    RowBox[{"n", "+", "1"}]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " from  ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Pi]", "(", 
+    RowBox[{
+     SubscriptBox["x", 
+      RowBox[{"n", "+", "1"}]], "|", "u"}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " by sampling from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"Uniform", "(", 
+     RowBox[{
+      RowBox[{"\[Pi]", "(", 
+       SubscriptBox["x", 
+        RowBox[{"n", "+", "1"}]], ")"}], "\[GreaterEqual]", "u"}], ")"}], 
+    ","}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " i.e. solve for the range of ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["X", 
+    RowBox[{"n", "+", "1"}]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", sampling ",
+ Cell[BoxData[
+  FormBox["W", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Uniform", "(", 
+    RowBox[{"0", ",", "1"}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and set"
+}], "TextNoIndent",
+ CellChangeTimes->{{3.697998944311026*^9, 3.697998981550735*^9}, {
+  3.697999046234685*^9, 3.697999084514558*^9}, {3.69799922713519*^9, 
+  3.697999230846678*^9}, {3.697999288476879*^9, 3.6979993559296427`*^9}, {
+  3.69799942313277*^9, 3.6979994244900637`*^9}, {3.697999501014539*^9, 
+  3.697999518938961*^9}, {3.6979995790398703`*^9, 3.697999594979287*^9}, {
+  3.697999686575323*^9, 3.697999691664633*^9}, {3.6979997686316147`*^9, 
+  3.6979998225075703`*^9}, {3.697999902335765*^9, 3.697999960713323*^9}, {
+  3.698000056434227*^9, 3.698000062178348*^9}, {3.698000178912909*^9, 
+  3.698000183998829*^9}, {3.698000336509676*^9, 3.698000338466565*^9}, {
+  3.698012695562634*^9, 3.698012742965128*^9}, {3.698012796025532*^9, 
+  3.698012848204183*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   SubscriptBox["X", 
+    RowBox[{"n", "+", "1"}]], "=", 
+   RowBox[{"\[Psi]", "(", 
+    RowBox[{
+     SubscriptBox["X", "n"], ",", 
+     SubscriptBox["W", "n"], ",", 
+     SubscriptBox["V", "n"]}], ")"}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.697999694765441*^9, 3.697999708661427*^9}}],
+
+Cell[TextData[{
+ "where ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["W", "n"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["V", "n"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " are i.i.d. ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Uniform", "(", 
+    RowBox[{"0", ",", "1"}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"]
+}], "TextNoIndent",
+ CellChangeTimes->{{3.6979998290887117`*^9, 3.6979998520963373`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Metropolis-Hastings algorithm", "Subsection",
+ CellChangeTimes->{{3.6979973066045713`*^9, 3.6979973124134293`*^9}, {
+  3.698000505850952*^9, 3.698000522640952*^9}}],
+
+Cell["We construct a transition density as follows", "TextNoIndent",
+ CellChangeTimes->{{3.6980018771530867`*^9, 3.698001888826417*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"p", "(", 
+    RowBox[{
+     SuperscriptBox["x", "\[Prime]"], "|", "x"}], ")"}], "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"\[Alpha]", "(", 
+      RowBox[{
+       SuperscriptBox["x", "\[Prime]"], ",", "x"}], ")"}], 
+     RowBox[{"q", "(", 
+      RowBox[{
+       SuperscriptBox["x", "\[Prime]"], "|", "x"}], ")"}]}], "+", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"1", "-", 
+       RowBox[{"r", "(", "x", ")"}]}], ")"}], 
+     StyleBox["1",
+      FontWeight->"Bold"], 
+     RowBox[{"(", 
+      RowBox[{
+       SuperscriptBox["x", "\[Prime]"], "=", "x"}], ")"}]}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.698001891849267*^9, 3.698001922938808*^9}}],
+
+Cell["where", "TextNoIndent",
+ CellChangeTimes->{{3.698001930130415*^9, 3.698001930696494*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"q", "(", 
+    RowBox[{
+     SuperscriptBox["x", "\[Prime]"], "|", "x"}], ")"}], TraditionalForm]],
+  CellChangeTimes->{{3.698001891849267*^9, 3.698001922938808*^9}}],
+ " is the proposal density."
+}], "Item",
+ CellChangeTimes->{{3.698001946893055*^9, 3.698001955013166*^9}}],
+
+Cell[TextData[Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"\[Alpha]", "(", 
+    RowBox[{
+     SuperscriptBox["x", "\[Prime]"], ",", "x"}], ")"}], "=", 
+   RowBox[{"min", 
+    RowBox[{"{", 
+     RowBox[{"1", ",", 
+      FractionBox[
+       RowBox[{
+        RowBox[{"\[Pi]", "(", 
+         SuperscriptBox["x", "\[Prime]"], ")"}], 
+        RowBox[{"q", "(", 
+         RowBox[{"x", "|", 
+          SuperscriptBox["x", "\[Prime]"]}], ")"}]}], 
+       RowBox[{
+        RowBox[{"\[Pi]", "(", "x", ")"}], 
+        RowBox[{"q", "(", 
+         RowBox[{
+          SuperscriptBox["x", "\[Prime]"], "|", "x"}], ")"}]}]]}], "}"}]}]}], 
+  TraditionalForm]],
+ CellChangeTimes->{{3.698001891849267*^9, 3.698001922938808*^9}}]], "Item",
+ CellChangeTimes->{{3.698001959663313*^9, 3.698001997074172*^9}}],
+
+Cell[TextData[Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"r", "(", "x", ")"}], "=", 
+   RowBox[{"\[Integral]", 
+    RowBox[{
+     RowBox[{"\[Alpha]", "(", 
+      RowBox[{
+       SuperscriptBox["x", "\[Prime]"], ",", "x"}], ")"}], 
+     RowBox[{"q", "(", 
+      RowBox[{
+       SuperscriptBox["x", "\[Prime]"], "|", "x"}], ")"}], 
+     RowBox[{"\[DifferentialD]", 
+      SuperscriptBox["x", "\[Prime]"]}]}]}]}], TraditionalForm]],
+ FormatType->"TraditionalForm"]], "Item",
+ CellChangeTimes->{{3.6980020025168133`*^9, 3.698002026809456*^9}}]
+}, Open  ]],
+
+Cell["It is easy to show that", "TextNoIndent",
+ CellChangeTimes->{{3.6980020383286037`*^9, 3.698002041859124*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{"p", "(", 
+     RowBox[{
+      SuperscriptBox["x", "\[Prime]"], "|", "x"}], ")"}], 
+    RowBox[{"\[Pi]", "(", "x", ")"}]}], "=", 
+   RowBox[{
+    RowBox[{"p", "(", 
+     RowBox[{"x", "|", 
+      SuperscriptBox["x", "\[Prime]"]}], ")"}], 
+    RowBox[{"\[Pi]", "(", 
+     SuperscriptBox["x", "\[Prime]"], ")"}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.6980020438609657`*^9, 3.6980020606661873`*^9}}],
+
+Cell["The MH sampling algorithm is", "TextNoIndent",
+ CellChangeTimes->{{3.6980020735044727`*^9, 3.698002084327237*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Take ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["x", "*"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"q", "(", 
+    RowBox[{
+     SuperscriptBox["x", "\[Prime]"], "|", "x"}], ")"}], TraditionalForm]],
+  CellChangeTimes->{{3.698001891849267*^9, 3.698001922938808*^9}}]
+}], "Item",
+ CellChangeTimes->{{3.698001946893055*^9, 3.698001955013166*^9}, {
+  3.69800209589683*^9, 3.6980021057737713`*^9}}],
+
+Cell[TextData[{
+ "Take ",
+ Cell[BoxData[
+  FormBox["u", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"U", "(", 
+    RowBox[{"0", ",", "1"}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"]
+}], "Item",
+ CellChangeTimes->{{3.698001959663313*^9, 3.698001997074172*^9}, {
+  3.69800210999155*^9, 3.698002123373877*^9}}],
+
+Cell[TextData[{
+ "If ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"u", "<", 
+    RowBox[{"\[Alpha]", "(", 
+     RowBox[{
+      SuperscriptBox["x", "*"], ",", "x"}], ")"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", then ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "\[Prime]"], "=", 
+    SuperscriptBox["x", "*"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " else ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "\[Prime]"], "=", "x"}], TraditionalForm]],
+  FormatType->"TraditionalForm"]
+}], "Item",
+ CellChangeTimes->{{3.6980020025168133`*^9, 3.698002026809456*^9}, {
+  3.698002127518134*^9, 3.6980021635654173`*^9}}]
+}, Open  ]],
+
+Cell[TextData[{
+ "To trigger off the chain, ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", "0"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " can be anything that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"\[Pi]", "(", 
+     SubscriptBox["x", "0"], ")"}], ">", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "TextNoIndent",
+ CellChangeTimes->{{3.6980021988188*^9, 3.698002220672175*^9}}]
+}, Open  ]],
+
+Cell["Barker algorithm", "Subsection",
+ CellChangeTimes->{{3.6979973066045713`*^9, 3.6979973124134293`*^9}, {
+  3.698000505850952*^9, 3.698000522640952*^9}, {3.6980022581258087`*^9, 
+  3.69800225936831*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Gibbs Sampler", "Section",
+ CellChangeTimes->{{3.697971048047491*^9, 3.697971051852512*^9}, {
+  3.697993965224593*^9, 3.697993972484655*^9}, {3.6979945231265593`*^9, 
+  3.697994525323015*^9}, {3.69799658217515*^9, 3.697996605491722*^9}, {
+  3.697997047043106*^9, 3.6979970592682056`*^9}, {3.698002297106125*^9, 
+  3.698002300158044*^9}}],
+
+Cell[TextData[{
+ "Suppose ",
+ Cell[BoxData[
+  FormBox[
+   StyleBox["x",
+    FontWeight->"Bold"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " dimensional, i.e. ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    StyleBox["x",
+     FontWeight->"Bold"], "=", 
+    RowBox[{"(", 
+     RowBox[{
+      SubscriptBox["x", "1"], ",", "\[Ellipsis]", ",", 
+      SubscriptBox["x", "p"]}], ")"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Pi]", "(", 
+    StyleBox["x",
+     FontWeight->"Bold"], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is the target stationary density. A MH algorithm might struggle as hard to \
+find a suitable proposal for all of ",
+ Cell[BoxData[
+  FormBox[
+   StyleBox["x",
+    FontWeight->"Bold"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". In such a case the common structure for Markov chain is the Gibbs \
+sampler. It works by finding the ",
+ StyleBox["full conditional densities",
+  FontWeight->"Bold"],
+ " of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Pi]", "(", 
+    StyleBox["x",
+     FontWeight->"Bold"], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", i.e. for each ",
+ Cell[BoxData[
+  FormBox["j", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["\[Pi]", "j"], "(", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["x", "j"], "|", 
+      SubscriptBox["x", "1"]}], ",", "\[Ellipsis]", ",", 
+     SubscriptBox["x", 
+      RowBox[{"j", "-", "1"}]], ",", 
+     SubscriptBox["x", 
+      RowBox[{"j", "+", "1"}]], ",", "\[Ellipsis]", ",", 
+     SubscriptBox["x", "p"]}], ")"}], TraditionalForm]]],
+ ". Then the transition density is"
+}], "TextNoIndent",
+ CellChangeTimes->{{3.6980148126485853`*^9, 3.6980150021279287`*^9}, {
+  3.6980150439413033`*^9, 3.698015061627653*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"p", "(", 
+    RowBox[{
+     SuperscriptBox[
+      StyleBox["x",
+       FontWeight->"Bold"], "\[Prime]"], "|", 
+     StyleBox["x",
+      FontWeight->"Bold"]}], ")"}], "=", 
+   RowBox[{
+    RowBox[{
+     SubscriptBox["\[Pi]", "p"], "(", 
+     RowBox[{
+      RowBox[{
+       SubsuperscriptBox["x", "p", "\[Prime]"], "|", 
+       SubsuperscriptBox["x", "1", "\[Prime]"]}], ",", "\[Ellipsis]", ",", 
+      SubsuperscriptBox["x", 
+       RowBox[{"p", "-", "1"}], "\[Prime]"]}], ")"}], 
+    RowBox[{
+     SubscriptBox["\[Pi]", 
+      RowBox[{"p", "-", "1"}]], "(", 
+     RowBox[{
+      RowBox[{
+       SubsuperscriptBox["x", 
+        RowBox[{"p", "-", "1"}], "\[Prime]"], "|", 
+       SubsuperscriptBox["x", "1", "\[Prime]"]}], ",", "\[Ellipsis]", ",", 
+      SubsuperscriptBox["x", 
+       RowBox[{"p", "-", "2"}], "\[Prime]"], ",", 
+      SubscriptBox["x", "p"]}], ")"}], 
+    RowBox[{
+     SubscriptBox["\[Pi]", 
+      RowBox[{"p", "-", "2"}]], "(", 
+     RowBox[{
+      RowBox[{
+       SubsuperscriptBox["x", 
+        RowBox[{"p", "-", "2"}], "\[Prime]"], "|", 
+       SubsuperscriptBox["x", "1", "\[Prime]"]}], ",", "\[Ellipsis]", ",", 
+      SubsuperscriptBox["x", 
+       RowBox[{"p", "-", "3"}], "\[Prime]"], ",", 
+      SubscriptBox["x", 
+       RowBox[{"p", "-", "1"}]], ",", 
+      SubscriptBox["x", "p"]}], ")"}], "\[Ellipsis]", 
+    RowBox[{
+     SubscriptBox["\[Pi]", "2"], "(", 
+     RowBox[{
+      RowBox[{
+       SubsuperscriptBox["x", "2", "\[Prime]"], "|", 
+       SubsuperscriptBox["x", "1", "\[Prime]"]}], ",", 
+      SubscriptBox["x", "3"], ",", "\[Ellipsis]", ",", 
+      SubscriptBox["x", "p"]}], ")"}], 
+    RowBox[{
+     SubscriptBox["\[Pi]", "1"], "(", 
+     RowBox[{
+      RowBox[{
+       SubsuperscriptBox["x", "1", "\[Prime]"], "|", 
+       SubscriptBox["x", "2"]}], ",", "\[Ellipsis]", ",", 
+      SubscriptBox["x", "p"]}], ")"}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.698015063877657*^9, 3.698015129769964*^9}, {
+  3.6980152762503433`*^9, 3.698015373919424*^9}}],
+
+Cell["which satisfies", "TextNoIndent",
+ CellChangeTimes->{{3.698015139316696*^9, 3.6980151487060347`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"\[Pi]", "(", 
+    SuperscriptBox[
+     StyleBox["x",
+      FontWeight->"Bold"], "\[Prime]"], ")"}], "=", 
+   RowBox[{"\[Integral]", 
+    RowBox[{
+     RowBox[{"p", "(", 
+      RowBox[{
+       SuperscriptBox[
+        StyleBox["x",
+         FontWeight->"Bold"], "\[Prime]"], "|", 
+       StyleBox["x",
+        FontWeight->"Bold"]}], ")"}], 
+     RowBox[{"\[Pi]", "(", 
+      StyleBox["x",
+       FontWeight->"Bold"], ")"}], 
+     RowBox[{"\[DifferentialD]", 
+      StyleBox["x",
+       FontWeight->"Bold"]}]}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.698015176200149*^9, 3.698015204356167*^9}}],
+
+Cell[TextData[{
+ "In particular, ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"p", "=", "2"}], TraditionalForm]],
+  FormatType->"TraditionalForm"]
+}], "TextNoIndent",
+ CellChangeTimes->{{3.698015578572092*^9, 3.698015583853146*^9}, {
+  3.698015655843739*^9, 3.698015657205497*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"p", "(", 
+    RowBox[{
+     SubsuperscriptBox["x", "1", "\[Prime]"], ",", 
+     RowBox[{
+      SubsuperscriptBox["x", "2", "\[Prime]"], "|", 
+      SubscriptBox["x", "1"]}], ",", 
+     SubscriptBox["x", "2"]}], ")"}], "=", 
+   RowBox[{
+    RowBox[{"\[Pi]", "(", 
+     RowBox[{
+      SubsuperscriptBox["x", "2", "\[Prime]"], "|", 
+      SubsuperscriptBox["x", "1", "\[Prime]"]}], ")"}], 
+    RowBox[{"\[Pi]", "(", 
+     RowBox[{
+      SubsuperscriptBox["x", "1", "\[Prime]"], "|", 
+      SubscriptBox["x", "2"]}], ")"}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.6980155875940113`*^9, 3.698015720425117*^9}}],
+
+Cell["Then", "TextNoIndent",
+ CellChangeTimes->{{3.698015740684813*^9, 3.6980157410154343`*^9}}],
+
+Cell[BoxData[{
+ FormBox[
+  RowBox[{
+   RowBox[{"\[Integral]", 
+    RowBox[{
+     RowBox[{"p", "(", 
+      RowBox[{
+       SubsuperscriptBox["x", "1", "\[Prime]"], ",", 
+       RowBox[{
+        SubsuperscriptBox["x", "2", "\[Prime]"], "|", 
+        SubscriptBox["x", "1"]}], ",", 
+       SubscriptBox["x", "2"]}], ")"}], 
+     RowBox[{"\[Pi]", "(", 
+      RowBox[{
+       SubscriptBox["x", "1"], ",", 
+       SubscriptBox["x", "2"]}], ")"}], 
+     RowBox[{"\[DifferentialD]", 
+      SubscriptBox["x", "1"]}], 
+     RowBox[{"\[DifferentialD]", 
+      SubscriptBox["x", "2"]}]}]}], "=", 
+   RowBox[{"\[Integral]", 
+    RowBox[{
+     RowBox[{"\[Pi]", "(", 
+      RowBox[{
+       SubsuperscriptBox["x", "2", "\[Prime]"], "|", 
+       SubsuperscriptBox["x", "1", "\[Prime]"]}], ")"}], 
+     RowBox[{"\[Pi]", "(", 
+      RowBox[{
+       SubsuperscriptBox["x", "1", "\[Prime]"], "|", 
+       SubscriptBox["x", "2"]}], ")"}], 
+     RowBox[{"\[Pi]", "(", 
+      RowBox[{
+       SubscriptBox["x", "1"], ",", 
+       SubscriptBox["x", "2"]}], ")"}], 
+     RowBox[{"\[DifferentialD]", 
+      SubscriptBox["x", "1"]}], 
+     RowBox[{"\[DifferentialD]", 
+      SubscriptBox["x", "2"]}]}]}]}], TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{"=", 
+   RowBox[{"\[Integral]", 
+    RowBox[{
+     RowBox[{"\[Pi]", "(", 
+      RowBox[{
+       SubsuperscriptBox["x", "2", "\[Prime]"], "|", 
+       SubsuperscriptBox["x", "1", "\[Prime]"]}], ")"}], 
+     RowBox[{"\[Pi]", "(", 
+      RowBox[{
+       SubsuperscriptBox["x", "1", "\[Prime]"], "|", 
+       SubscriptBox["x", "2"]}], ")"}], 
+     RowBox[{"\[Pi]", "(", 
+      SubscriptBox["x", "2"], ")"}], 
+     RowBox[{"\[DifferentialD]", 
+      SubscriptBox["x", "2"]}]}]}]}], TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{"=", 
+   RowBox[{
+    RowBox[{"\[Pi]", "(", 
+     RowBox[{
+      SubsuperscriptBox["x", "2", "\[Prime]"], "|", 
+      SubsuperscriptBox["x", "1", "\[Prime]"]}], ")"}], 
+    RowBox[{"\[Pi]", "(", 
+     SubsuperscriptBox["x", "1", "\[Prime]"], ")"}]}]}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{"=", 
+   RowBox[{"\[Pi]", "(", 
+    RowBox[{
+     SubsuperscriptBox["x", "1", "\[Prime]"], ",", 
+     SubsuperscriptBox["x", "2", "\[Prime]"]}], ")"}]}], 
+  TraditionalForm]}], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.698015749973214*^9, 3.698015751225078*^9}, {
+  3.698015885308844*^9, 3.6980159152993097`*^9}, {3.6980159598019943`*^9, 
+  3.698015968538128*^9}, {3.6980160078704157`*^9, 3.698016021345326*^9}, {
+  3.698016145881765*^9, 3.698016216658311*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 685},
+WindowMargins->{{214, Automatic}, {Automatic, 14}},
+FrontEndVersion->"10.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 29, \
+2015)",
+StyleDefinitions->"Cambria Article.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 152, 2, 77, "Title"],
+Cell[CellGroupData[{
+Cell[757, 28, 153, 2, 69, "Section"],
+Cell[913, 32, 316, 9, 48, "DisplayFormulaNumbered"],
+Cell[1232, 43, 406, 13, 22, "TextNoIndent"],
+Cell[1641, 58, 442, 14, 61, "DisplayFormulaNumbered"],
+Cell[2086, 74, 217, 6, 32, "DisplayFormulaNumbered"],
+Cell[2306, 82, 324, 10, 48, "DisplayFormulaNumbered"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2667, 97, 203, 3, 69, "Section"],
+Cell[2873, 102, 98, 1, 22, "TextNoIndent"],
+Cell[2974, 105, 274, 8, 32, "DisplayFormulaNumbered"],
+Cell[3251, 115, 754, 27, 22, "TextNoIndent"],
+Cell[4008, 144, 442, 14, 50, "DisplayFormulaNumbered"],
+Cell[4453, 160, 97, 1, 22, "TextNoIndent"],
+Cell[4553, 163, 797, 25, 50, "DisplayFormulaNumbered"],
+Cell[5353, 190, 1254, 44, 49, "TextNoIndent"],
+Cell[6610, 236, 1436, 39, 50, "DisplayFormulaNumbered"],
+Cell[8049, 277, 346, 9, 22, "TextNoIndent"],
+Cell[8398, 288, 305, 8, 50, "DisplayFormulaNumbered"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8740, 301, 257, 3, 69, "Section"],
+Cell[9000, 306, 1272, 41, 64, "TextNoIndent"],
+Cell[10275, 349, 272, 8, 32, "DisplayFormulaNumbered"],
+Cell[10550, 359, 430, 13, 22, "TextNoIndent"],
+Cell[10983, 374, 383, 11, 54, "DisplayFormulaNumbered"],
+Cell[11369, 387, 1935, 59, 90, "TextNoIndent"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13341, 451, 247, 3, 69, "Section"],
+Cell[13591, 456, 1944, 70, 67, "TextNoIndent"],
+Cell[15538, 528, 434, 14, 42, "DisplayFormulaNumbered"],
+Cell[15975, 544, 96, 1, 22, "TextNoIndent"],
+Cell[16074, 547, 362, 11, 48, "DisplayFormulaNumbered"],
+Cell[16439, 560, 119, 1, 22, "TextNoIndent"],
+Cell[16561, 563, 310, 10, 32, "DisplayFormulaNumbered"],
+Cell[16874, 575, 94, 1, 22, "TextNoIndent"],
+Cell[16971, 578, 646, 21, 42, "DisplayFormulaNumbered"],
+Cell[17620, 601, 95, 1, 22, "TextNoIndent"],
+Cell[17718, 604, 1249, 42, 74, "DisplayFormulaNumbered"],
+Cell[18970, 648, 139, 1, 22, "TextNoIndent"],
+Cell[19112, 651, 519, 17, 42, "DisplayFormulaNumbered"],
+Cell[19634, 670, 591, 18, 43, "TextNoIndent"],
+Cell[CellGroupData[{
+Cell[20250, 692, 812, 29, 36, "Item"],
+Cell[21065, 723, 917, 34, 34, "Item"],
+Cell[21985, 759, 507, 17, 34, "Item"]
+}, Open  ]],
+Cell[22507, 779, 1047, 36, 64, "TextNoIndent"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23591, 820, 308, 4, 69, "Section"],
+Cell[23902, 826, 119, 1, 22, "TextNoIndent"],
+Cell[24024, 829, 391, 12, 48, "DisplayFormulaNumbered"],
+Cell[24418, 843, 687, 22, 43, "TextNoIndent"],
+Cell[25108, 867, 1291, 40, 74, "DisplayFormulaNumbered"],
+Cell[26402, 909, 922, 31, 76, "DisplayFormulaNumbered"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27361, 945, 314, 4, 69, "Section"],
+Cell[27678, 951, 111, 1, 22, "TextNoIndent"],
+Cell[27792, 954, 380, 11, 48, "DisplayFormulaNumbered"],
+Cell[28175, 967, 498, 17, 23, "TextNoIndent"],
+Cell[CellGroupData[{
+Cell[28698, 988, 115, 1, 39, "Subsection"],
+Cell[28816, 991, 316, 9, 23, "TextNoIndent"],
+Cell[29135, 1002, 337, 10, 33, "DisplayFormulaNumbered"],
+Cell[29475, 1014, 94, 1, 22, "TextNoIndent"],
+Cell[29572, 1017, 592, 19, 48, "DisplayFormulaNumbered"],
+Cell[30167, 1038, 1313, 45, 44, "TextNoIndent"],
+Cell[31483, 1085, 379, 12, 32, "DisplayFormulaNumbered"],
+Cell[31865, 1099, 2908, 93, 66, "TextNoIndent"],
+Cell[34776, 1194, 356, 11, 32, "DisplayFormulaNumbered"],
+Cell[35135, 1207, 497, 18, 22, "TextNoIndent"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[35669, 1230, 170, 2, 39, "Subsection"],
+Cell[35842, 1234, 136, 1, 22, "TextNoIndent"],
+Cell[35981, 1237, 733, 24, 33, "DisplayFormulaNumbered"],
+Cell[36717, 1263, 95, 1, 22, "TextNoIndent"],
+Cell[CellGroupData[{
+Cell[36837, 1268, 327, 9, 27, "Item"],
+Cell[37167, 1279, 786, 23, 40, "Item"],
+Cell[37956, 1304, 542, 15, 28, "Item"]
+}, Open  ]],
+Cell[38513, 1322, 115, 1, 22, "TextNoIndent"],
+Cell[38631, 1325, 490, 15, 33, "DisplayFormulaNumbered"],
+Cell[39124, 1342, 120, 1, 22, "TextNoIndent"],
+Cell[CellGroupData[{
+Cell[39269, 1347, 476, 15, 27, "Item"],
+Cell[39748, 1364, 381, 13, 26, "Item"],
+Cell[40132, 1379, 680, 24, 26, "Item"]
+}, Open  ]],
+Cell[40827, 1406, 434, 15, 22, "TextNoIndent"]
+}, Open  ]],
+Cell[41276, 1424, 207, 3, 39, "Subsection"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[41520, 1432, 343, 5, 69, "Section"],
+Cell[41866, 1439, 1964, 68, 95, "TextNoIndent"],
+Cell[43833, 1509, 2070, 60, 60, "DisplayFormulaNumbered"],
+Cell[45906, 1571, 107, 1, 22, "TextNoIndent"],
+Cell[46016, 1574, 673, 23, 48, "DisplayFormulaNumbered"],
+Cell[46692, 1599, 276, 8, 22, "TextNoIndent"],
+Cell[46971, 1609, 686, 20, 33, "DisplayFormulaNumbered"],
+Cell[47660, 1631, 96, 1, 22, "TextNoIndent"],
+Cell[47759, 1634, 2564, 74, 133, "DisplayFormulaNumbered"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
